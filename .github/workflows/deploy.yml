@@ -30,7 +30,7 @@ jobs:
     - name: set ssh key
       run: |
         mkdir -p ~/.ssh/
-        echo "${{secrets.GITHUB}}" > ~/.ssh/id_rsa
+        echo "${{secrets.MY_ACTION_TOKEN}}" > ~/.ssh/id_rsa
         chmod 600 ~/.ssh/id_rsa
         ssh-keyscan "github.com" >> ~/.ssh/known_hosts
         echo "---------- set ssh-key ok ----------"
