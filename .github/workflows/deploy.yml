@@ -1,55 +1,7 @@
-# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
-# github actions 中文文档 https://docs.github.com/cn/actions/getting-started-with-github-actions
-
-name: deploy
-
-on:
-  push:
-    branches: [ main ]
-    paths:
-      - '.github/workflows/*'
-      - 'docs/**'
-      - 'book.json'
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-node@v1
-      with:
-        node-version: 10
-    - name: build
-      run: |
-        echo "---------- node-version `node -v` ----------"
-        npm i
-        echo "---------- npm install ok ----------"
-        npm run build
-        npm run build
-        echo "---------- build ok ----------"
-    - name: set ssh key
-      run: |
-        mkdir -p ~/.ssh/
-        echo "${{secrets.GITHUB}}" > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
-        ssh-keyscan "github.com" >> ~/.ssh/known_hosts
-        echo "---------- set ssh-key ok ----------"
-    - name: download and replace # 下载现有文件，替换
-      run: |
-        git clone git@github.com:gaoxiaoshi/base.web-guide.funny-share.com.git
-        echo "---------- git clone ok ----------"
-        cp -r ./_book/* ./base.web-guide.funny-share.com ## 用最新构建出来的文件，替换现有的
-        echo "---------- replace ok ----------"
-    - name: upload # 上传文件
-      run: |
-        cd ./base.web-guide.funny-share.com
-        git config user.name "github-actions"
-        git config user.email "github-actions@github.com"
-        echo "---------- begin git status ----------"
-        echo `git status`
-        echo "---------- end git status ----------"
-        git add .
-        git commit -m "update by github actions"
-        git push origin main
-    - name: delete ssh key # 删除 ssh key
-      run: rm -rf ~/.ssh/id_rsa
+- name: Publish Gitbook
+  # You may pin to the exact commit or the version.
+  # uses: tuliren/publish-gitbook@f3830e3fc7bf059e0501c5ed535d97b2aa181e2e
+  uses: tuliren/publish-gitbook@v1.0.0
+  with:
+    # Github token for the repo
+    github_token: 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
