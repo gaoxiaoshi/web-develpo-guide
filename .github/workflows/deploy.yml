@@ -27,16 +27,9 @@ jobs:
         npm run build
         npm run build
         echo "---------- build ok ----------"
-    - name: set ssh key
-      run: |
-        mkdir -p ~/.ssh/
-        echo "${{secrets.MY_ACTION_TOKEN}}" > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
-        ssh-keyscan "github.com" >> ~/.ssh/known_hosts
-        echo "---------- set ssh-key ok ----------"
     - name: download and replace # 下载现有文件，替换
       run: |
-        git clone git@github.com:gaoxiaoshi/base.web-guide.funny-share.com.git
+        git clone https://github.com/gaoxiaoshi/base.web-guide.funny-share.com.git
         echo "---------- git clone ok ----------"
         cp -r ./_book/* ./base.web-guide.funny-share.com ## 用最新构建出来的文件，替换现有的
         echo "---------- replace ok ----------"
@@ -51,5 +44,3 @@ jobs:
         git add .
         git commit -m "update by github actions"
         git push origin main
-    - name: delete ssh key # 删除 ssh key
-      run: rm -rf ~/.ssh/id_rsa
