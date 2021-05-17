@@ -36,8 +36,8 @@ jobs:
     - name: upload # 上传文件
       run: |
         cd ./base.web-guide.funny-share.com
-        git config user.name "github-actions"
-        git config user.email "github-actions@github.com"
+        git config user.name "gaoxiaoshi"
+        git config user.email "gxiaoshi@gmail.com"
         echo "---------- begin git status ----------"
         echo `git status`
         echo "---------- end git status ----------"
